@@ -378,15 +378,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             register_code16(KC_H);
           } else if (last_keycode == KC_QU) {
             // Send backspace to delete 'u' from "qu"
-            register_code16(KC_BSPC);
+            tap_code16(KC_BSPC);
           }
           magic_key_active = true;
         } else {
           if (last_keycode == KC_T && magic_key_active) {
             unregister_code16(KC_H);
-          } else if (last_keycode == KC_QU && magic_key_active) {
-            unregister_code16(KC_BSPC);
-          }
+          // KC_QU uses tap_code16, no need to unregister
           magic_key_active = false;
         }
       } else {
@@ -406,15 +404,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           register_code16(KC_H);
         } else if (last_keycode == KC_QU) {
           // Send backspace to delete 'u' from "qu"
-          register_code16(KC_BSPC);
+          tap_code16(KC_BSPC);
         }
         magic_key_active = true;
       } else {
         if (last_keycode == KC_T && magic_key_active) {
           unregister_code16(KC_H);
-        } else if (last_keycode == KC_QU && magic_key_active) {
-          unregister_code16(KC_BSPC);
-        }
+        // KC_QU uses tap_code16, no need to unregister
         magic_key_active = false;
       }
       return false;
