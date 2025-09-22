@@ -14,6 +14,7 @@ enum custom_keycodes {
   ST_MACRO_3,
   ST_MACRO_4,
   ST_MACRO_5,
+  ST_MACRO_6,
   MAGIC_KEY,
   KC_QU,
 };
@@ -80,11 +81,13 @@ const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM = LAYOUT(
 const uint16_t PROGMEM combo0[] = { KC_B, MT(MOD_LCTL, KC_D), COMBO_END};
 const uint16_t PROGMEM combo1[] = { MT(MOD_RCTL, KC_I), KC_J, COMBO_END};
 const uint16_t PROGMEM combo2[] = { KC_R, KC_F, COMBO_END};
+const uint16_t PROGMEM combo3[] = { MT(MOD_LCTL, KC_D), KC_R, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo0, KC_ENTER),
     COMBO(combo1, KC_ENTER),
     COMBO(combo2, ST_MACRO_5),
+    COMBO(combo3, ST_MACRO_6),
 };
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
@@ -233,6 +236,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case ST_MACRO_5:
     if (record->event.pressed) {
       SEND_STRING(SS_TAP(X_C)SS_DELAY(1)  SS_TAP(X_H));
+    }
+    break;
+    case ST_MACRO_6:
+    if (record->event.pressed) {
+      SEND_STRING(SS_TAP(X_T)SS_DELAY(1)  SS_TAP(X_H));
     }
     break;
 
