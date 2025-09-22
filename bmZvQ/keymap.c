@@ -30,7 +30,7 @@ enum custom_keycodes {
 #define DUAL_FUNC_6 LT(6, KC_O)
 #define DUAL_FUNC_7 LT(11, KC_F20)
 #define DUAL_FUNC_8 LT(3, KC_E)
-#define DUAL_FUNC_9 LT(0, MAGIC_KEY)
+#define DUAL_FUNC_9 MT(MOD_LALT, MAGIC_KEY)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
@@ -431,34 +431,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           unregister_code16(KC_COLN);
         }  
       }  
-      return false;
-    case DUAL_FUNC_9:
-      if (record->tap.count > 0) {
-        if (record->event.pressed) {
-          // Magic key pressed - check last key
-          if (last_keycode == KC_T || is_vowel(last_keycode)) {
-            // Send 'h' for 't' or vowels
-            register_code16(KC_H);
-          } else if (last_keycode == KC_QU) {
-            // Send backspace to delete 'u' from "qu"
-            tap_code16(KC_BSPC);
-          }
-          magic_key_active = true;
-        } else {
-          if ((last_keycode == KC_T || is_vowel(last_keycode)) && magic_key_active) {
-            unregister_code16(KC_H);
-          }
-          // KC_QU uses tap_code16, no need to unregister
-          magic_key_active = false;
-        }
-      } else {
-        // Hold functionality - left alt
-        if (record->event.pressed) {
-          register_code16(KC_LEFT_ALT);
-        } else {
-          unregister_code16(KC_LEFT_ALT);
-        }
-      }
       return false;
     case MAGIC_KEY:
       if (record->event.pressed) {
