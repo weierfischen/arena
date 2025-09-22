@@ -15,6 +15,7 @@ enum custom_keycodes {
   ST_MACRO_4,
   ST_MACRO_5,
   MAGIC_KEY,
+  KC_QU,
 };
 
 
@@ -120,9 +121,6 @@ bool capslock_active = false;
 // Magic key functionality
 static uint16_t last_keycode = KC_NO;
 static bool magic_key_active = false;
-
-// Special keycode for "qu" sequence
-#define KC_QU 0x7F00
 
 // Helper function to check if a keycode is a vowel
 bool is_vowel(uint16_t keycode) {
