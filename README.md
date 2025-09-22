@@ -19,14 +19,7 @@ w z m c b   j y ' . -
 | ---: | :---: | :--- |
 | `t`+`✦` | `th` |  |
 | `qu`+`✦` | `Q` | As `Q` outputs `qu`, the magic key simply deletes `u` |
-| `a`+`✦` | `ah` |  |
-| `e`+`✦` | `eh` |  |
-| `i`+`✦` | `ih` |  |
-| `o`+`✦` | `oh` |  |
-| `u`+`✦` | `uh` |  |
-| `ä`+`✦` | `äh` |  |
-| `ö`+`✦` | `öh` |  |
-| `ü`+`✦` | `üh` |  |
+| `vowel`+`✦` | `+h` | Adds `h` after vowels (a,e,i,o,u,ä,ö,ü) |
 
 # Oryx with custom QMK
 
