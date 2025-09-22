@@ -17,9 +17,16 @@ w z m c b   j y ' . -
 
 | Prev. | Repeat | Comment |
 | ---: | :---: | :--- |
-| `space`+`✦` | `th` |  |
+| `t`+`✦` | `th` |  |
 | `qu`+`✦` | `Q` | As `Q` outputs `qu`, the magic key simply deletes `u` |
-| `l`+`✦` | `ll` |  |
+| `a`+`✦` | `ah` |  |
+| `e`+`✦` | `eh` |  |
+| `i`+`✦` | `ih` |  |
+| `o`+`✦` | `oh` |  |
+| `u`+`✦` | `uh` |  |
+| `ä`+`✦` | `äh` |  |
+| `ö`+`✦` | `öh` |  |
+| `ü`+`✦` | `üh` |  |
 
 # Oryx with custom QMK
 
