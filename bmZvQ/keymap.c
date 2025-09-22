@@ -387,6 +387,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }  
       }  
       return false;
+    case MT(MOD_LALT, MAGIC_KEY):
+      if (record->tap.count > 0) {
+        // Tapped - magic key functionality
+        if (record->event.pressed) {
+          // Magic key pressed - check last key
+          if (last_keycode == KC_T || is_vowel(last_keycode)) {
+            // Send 'h' for 't' or vowels
+            register_code16(KC_H);
+          } else if (last_keycode == KC_QU) {
+            // Send backspace to delete 'u' from "qu"
+            tap_code16(KC_BSPC);
+          }
+          magic_key_active = true;
+        } else {
+          if ((last_keycode == KC_T || is_vowel(last_keycode)) && magic_key_active) {
+            unregister_code16(KC_H);
+          }
+          // KC_QU uses tap_code16, no need to unregister
+          magic_key_active = false;
+        }
+        return false;
+      }
+      // If not tapped (held), let QMK handle left alt
+      return true;
     case MAGIC_KEY:
       if (record->event.pressed) {
         // Magic key pressed - check last key
@@ -414,7 +438,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
 
   // Track last keycode for magic key functionality (for regular keys)
-  if (record->event.pressed && keycode != MAGIC_KEY && keycode != DUAL_FUNC_9 &&
+  if (record->event.pressed && keycode != MAGIC_KEY && keycode != MT(MOD_LALT, MAGIC_KEY) &&
       keycode != DUAL_FUNC_5 && keycode != DUAL_FUNC_2 && keycode != DUAL_FUNC_3 && keycode != DUAL_FUNC_4) {
     // Handle mod-tap keys for I and E
     if (keycode == MT(MOD_RCTL, KC_I)) {
