@@ -307,16 +307,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->tap.count > 0) {
         if (record->event.pressed) {
           register_code16(KC_T);
+          last_keycode = KC_T;  // Track for magic key
         } else {
           unregister_code16(KC_T);
         }
       } else {
         if (record->event.pressed) {
           register_code16(LSFT(KC_T));
+          last_keycode = KC_NO;  // Don't track shifted T
         } else {
           unregister_code16(LSFT(KC_T));
-        }  
-      }  
+        }
+      }
       return false;
     case DUAL_FUNC_6:
       if (record->tap.count > 0) {
@@ -409,21 +411,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
   }
 
-  // Track last keycode for magic key functionality
-  if (record->event.pressed && keycode != MAGIC_KEY && keycode != DUAL_FUNC_9) {
-    // Map dual function keys to their base keycodes
-    switch (keycode) {
-      case DUAL_FUNC_5:
-        last_keycode = KC_T;
-        break;
-      default:
-        // For regular keycodes, store as-is
-        if (keycode >= KC_A && keycode <= KC_Z) {
-          last_keycode = keycode;
-        } else {
-          last_keycode = KC_NO;
-        }
-        break;
+  // Track last keycode for magic key functionality (for regular keys)
+  if (record->event.pressed && keycode != MAGIC_KEY && keycode != DUAL_FUNC_9 && keycode != DUAL_FUNC_5) {
+    // For regular keycodes, store as-is
+    if (keycode >= KC_A && keycode <= KC_Z) {
+      last_keycode = keycode;
+    } else {
+      last_keycode = KC_NO;
     }
   }
 
