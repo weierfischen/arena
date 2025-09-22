@@ -395,6 +395,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           if (last_keycode == KC_T || is_vowel(last_keycode)) {
             // Send 'h' for 't' or vowels
             register_code16(KC_H);
+          } else if (last_keycode == KC_L) {
+            // Send 'l' for 'l' + magic = 'll'
+            register_code16(KC_L);
           } else if (last_keycode == KC_QU) {
             // Send backspace to delete 'u' from "qu"
             tap_code16(KC_BSPC);
@@ -403,6 +406,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else {
           if ((last_keycode == KC_T || is_vowel(last_keycode)) && magic_key_active) {
             unregister_code16(KC_H);
+          } else if (last_keycode == KC_L && magic_key_active) {
+            unregister_code16(KC_L);
           }
           // KC_QU uses tap_code16, no need to unregister
           magic_key_active = false;
@@ -417,6 +422,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (last_keycode == KC_T || is_vowel(last_keycode)) {
           // Send 'h' for 't' or vowels
           register_code16(KC_H);
+        } else if (last_keycode == KC_L) {
+          // Send 'l' for 'l' + magic = 'll'
+          register_code16(KC_L);
         } else if (last_keycode == KC_QU) {
           // Send backspace to delete 'u' from "qu"
           tap_code16(KC_BSPC);
@@ -425,6 +433,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       } else {
         if ((last_keycode == KC_T || is_vowel(last_keycode)) && magic_key_active) {
           unregister_code16(KC_H);
+        } else if (last_keycode == KC_L && magic_key_active) {
+          unregister_code16(KC_L);
         }
         // KC_QU uses tap_code16, no need to unregister
         magic_key_active = false;
