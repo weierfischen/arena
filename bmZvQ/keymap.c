@@ -14,6 +14,7 @@ enum custom_keycodes {
   ST_MACRO_3,
   ST_MACRO_4,
   ST_MACRO_5,
+  MAGIC_KEY,
 };
 
 
@@ -27,6 +28,7 @@ enum custom_keycodes {
 #define DUAL_FUNC_6 LT(6, KC_O)
 #define DUAL_FUNC_7 LT(11, KC_F20)
 #define DUAL_FUNC_8 LT(3, KC_E)
+#define DUAL_FUNC_9 LT(0, MAGIC_KEY)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
@@ -34,7 +36,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,         KC_X,           KC_G,           KC_R,           KC_F,           KC_V,                                           KC_BSPC,        DUAL_FUNC_2,    DUAL_FUNC_3,    KC_COMMA,       ST_MACRO_0,     CW_TOGG,        
     OSL(1),         KC_L,           DUAL_FUNC_1,    MT(MOD_LSFT, KC_N),MT(MOD_LCTL, KC_D),KC_P,                                           KC_K,           MT(MOD_RCTL, KC_I),MT(MOD_RSFT, KC_E),DUAL_FUNC_4,    KC_H,           KC_TRANSPARENT, 
     TG(2),          KC_W,           KC_Z,           KC_M,           KC_C,           KC_B,                                           KC_J,           KC_Y,           ST_MACRO_1,     KC_DOT,         KC_MINUS,       TG(2),          
-                                                    KC_LEFT_ALT,    LT(3, KC_SPACE),                                DUAL_FUNC_5,    OSM(MOD_LSFT)
+                                                    DUAL_FUNC_9,    LT(3, KC_SPACE),                                DUAL_FUNC_5,    OSM(MOD_LSFT)
   ),
   [1] = LAYOUT_voyager(
     US_SECT,        KC_PLUS,        KC_AT,          US_HASH,        US_DEG,         KC_PERC,                                        KC_AMPR,        KC_SLASH,       KC_ASTR,        KC_TILD,        KC_EQUAL,       KC_TRANSPARENT, 
@@ -114,6 +116,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 }
 
 bool capslock_active = false;
+
+// Magic key functionality
+static uint16_t last_keycode = KC_NO;
+static bool magic_key_active = false;
 
 bool led_update_user(led_t led_state) {
   capslock_active = led_state.caps_lock;
@@ -357,11 +363,69 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }  
       }  
       return false;
+    case DUAL_FUNC_9:
+      if (record->tap.count > 0) {
+        if (record->event.pressed) {
+          // Magic key pressed - check if last key was 't'
+          if (last_keycode == KC_T) {
+            // Send 'h' to complete "th"
+            register_code16(KC_H);
+          }
+          magic_key_active = true;
+        } else {
+          if (last_keycode == KC_T && magic_key_active) {
+            unregister_code16(KC_H);
+          }
+          magic_key_active = false;
+        }
+      } else {
+        // Hold functionality - left alt
+        if (record->event.pressed) {
+          register_code16(KC_LEFT_ALT);
+        } else {
+          unregister_code16(KC_LEFT_ALT);
+        }
+      }
+      return false;
+    case MAGIC_KEY:
+      if (record->event.pressed) {
+        // Magic key pressed - check if last key was 't'
+        if (last_keycode == KC_T) {
+          // Send 'h' to complete "th"
+          register_code16(KC_H);
+        }
+        magic_key_active = true;
+      } else {
+        if (last_keycode == KC_T && magic_key_active) {
+          unregister_code16(KC_H);
+        }
+        magic_key_active = false;
+      }
+      return false;
     case RGB_SLD:
       if (record->event.pressed) {
         rgblight_mode(1);
       }
       return false;
   }
+
+  // Track last keycode for magic key functionality
+  if (record->event.pressed && keycode != MAGIC_KEY && keycode != DUAL_FUNC_9) {
+    // Map dual function keys to their base keycodes
+    switch (keycode) {
+      case DUAL_FUNC_5:
+        last_keycode = KC_T;
+        break;
+      default:
+        // For regular keycodes, store as-is
+        if (keycode >= KC_A && keycode <= KC_Z) {
+          last_keycode = keycode;
+        } else {
+          last_keycode = KC_NO;
+        }
+        break;
+    }
+  }
+
   return true;
 }
