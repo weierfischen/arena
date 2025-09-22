@@ -121,6 +121,9 @@ bool capslock_active = false;
 static uint16_t last_keycode = KC_NO;
 static bool magic_key_active = false;
 
+// Special keycode for "qu" sequence
+#define KC_QU 0x7F00
+
 bool led_update_user(led_t led_state) {
   capslock_active = led_state.caps_lock;
   return true;
@@ -200,6 +203,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case ST_MACRO_0:
     if (record->event.pressed) {
       SEND_STRING(SS_TAP(X_Q)SS_DELAY(1)  SS_TAP(X_U));
+      last_keycode = KC_QU;  // Track "qu" sequence
     }
     break;
     case ST_MACRO_1:
@@ -368,15 +372,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case DUAL_FUNC_9:
       if (record->tap.count > 0) {
         if (record->event.pressed) {
-          // Magic key pressed - check if last key was 't'
+          // Magic key pressed - check last key
           if (last_keycode == KC_T) {
             // Send 'h' to complete "th"
             register_code16(KC_H);
+          } else if (last_keycode == KC_QU) {
+            // Send backspace to delete 'u' from "qu"
+            register_code16(KC_BSPC);
           }
           magic_key_active = true;
         } else {
           if (last_keycode == KC_T && magic_key_active) {
             unregister_code16(KC_H);
+          } else if (last_keycode == KC_QU && magic_key_active) {
+            unregister_code16(KC_BSPC);
           }
           magic_key_active = false;
         }
@@ -391,15 +400,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
     case MAGIC_KEY:
       if (record->event.pressed) {
-        // Magic key pressed - check if last key was 't'
+        // Magic key pressed - check last key
         if (last_keycode == KC_T) {
           // Send 'h' to complete "th"
           register_code16(KC_H);
+        } else if (last_keycode == KC_QU) {
+          // Send backspace to delete 'u' from "qu"
+          register_code16(KC_BSPC);
         }
         magic_key_active = true;
       } else {
         if (last_keycode == KC_T && magic_key_active) {
           unregister_code16(KC_H);
+        } else if (last_keycode == KC_QU && magic_key_active) {
+          unregister_code16(KC_BSPC);
         }
         magic_key_active = false;
       }
