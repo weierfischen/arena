@@ -124,6 +124,12 @@ static bool magic_key_active = false;
 // Special keycode for "qu" sequence
 #define KC_QU 0x7F00
 
+// Helper function to check if a keycode is a vowel
+bool is_vowel(uint16_t keycode) {
+    return (keycode == KC_A || keycode == KC_E || keycode == KC_I ||
+            keycode == KC_O || keycode == KC_U);
+}
+
 bool led_update_user(led_t led_state) {
   capslock_active = led_state.caps_lock;
   return true;
@@ -307,6 +313,57 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }  
       }  
       return false;
+    case DUAL_FUNC_2:
+      if (record->tap.count > 0) {
+        if (record->event.pressed) {
+          register_code16(KC_U);
+          last_keycode = KC_U;  // Track for magic key
+        } else {
+          unregister_code16(KC_U);
+        }
+      } else {
+        if (record->event.pressed) {
+          register_code16(US_UDIA);
+          last_keycode = KC_U;  // Track ü as u for magic key
+        } else {
+          unregister_code16(US_UDIA);
+        }
+      }
+      return false;
+    case DUAL_FUNC_3:
+      if (record->tap.count > 0) {
+        if (record->event.pressed) {
+          register_code16(KC_O);
+          last_keycode = KC_O;  // Track for magic key
+        } else {
+          unregister_code16(KC_O);
+        }
+      } else {
+        if (record->event.pressed) {
+          register_code16(US_ODIA);
+          last_keycode = KC_O;  // Track ö as o for magic key
+        } else {
+          unregister_code16(US_ODIA);
+        }
+      }
+      return false;
+    case DUAL_FUNC_4:
+      if (record->tap.count > 0) {
+        if (record->event.pressed) {
+          register_code16(KC_A);
+          last_keycode = KC_A;  // Track for magic key
+        } else {
+          unregister_code16(KC_A);
+        }
+      } else {
+        if (record->event.pressed) {
+          register_code16(US_ADIA);
+          last_keycode = KC_A;  // Track ä as a for magic key
+        } else {
+          unregister_code16(US_ADIA);
+        }
+      }
+      return false;
     case DUAL_FUNC_5:
       if (record->tap.count > 0) {
         if (record->event.pressed) {
@@ -373,8 +430,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->tap.count > 0) {
         if (record->event.pressed) {
           // Magic key pressed - check last key
-          if (last_keycode == KC_T) {
-            // Send 'h' to complete "th"
+          if (last_keycode == KC_T || is_vowel(last_keycode)) {
+            // Send 'h' for 't' or vowels
             register_code16(KC_H);
           } else if (last_keycode == KC_QU) {
             // Send backspace to delete 'u' from "qu"
@@ -382,8 +439,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           }
           magic_key_active = true;
         } else {
-          if (last_keycode == KC_T && magic_key_active) {
+          if ((last_keycode == KC_T || is_vowel(last_keycode)) && magic_key_active) {
             unregister_code16(KC_H);
+          }
           // KC_QU uses tap_code16, no need to unregister
           magic_key_active = false;
         }
@@ -399,8 +457,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case MAGIC_KEY:
       if (record->event.pressed) {
         // Magic key pressed - check last key
-        if (last_keycode == KC_T) {
-          // Send 'h' to complete "th"
+        if (last_keycode == KC_T || is_vowel(last_keycode)) {
+          // Send 'h' for 't' or vowels
           register_code16(KC_H);
         } else if (last_keycode == KC_QU) {
           // Send backspace to delete 'u' from "qu"
@@ -408,8 +466,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         magic_key_active = true;
       } else {
-        if (last_keycode == KC_T && magic_key_active) {
+        if ((last_keycode == KC_T || is_vowel(last_keycode)) && magic_key_active) {
           unregister_code16(KC_H);
+        }
         // KC_QU uses tap_code16, no need to unregister
         magic_key_active = false;
       }
@@ -422,9 +481,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
 
   // Track last keycode for magic key functionality (for regular keys)
-  if (record->event.pressed && keycode != MAGIC_KEY && keycode != DUAL_FUNC_9 && keycode != DUAL_FUNC_5) {
-    // For regular keycodes, store as-is
-    if (keycode >= KC_A && keycode <= KC_Z) {
+  if (record->event.pressed && keycode != MAGIC_KEY && keycode != DUAL_FUNC_9 &&
+      keycode != DUAL_FUNC_5 && keycode != DUAL_FUNC_2 && keycode != DUAL_FUNC_3 && keycode != DUAL_FUNC_4) {
+    // Handle mod-tap keys for I and E
+    if (keycode == MT(MOD_RCTL, KC_I)) {
+      if (record->tap.count > 0) {
+        last_keycode = KC_I;  // Track I for magic key
+      } else {
+        last_keycode = KC_NO;  // Don't track when used as modifier
+      }
+    } else if (keycode == MT(MOD_RSFT, KC_E)) {
+      if (record->tap.count > 0) {
+        last_keycode = KC_E;  // Track E for magic key
+      } else {
+        last_keycode = KC_NO;  // Don't track when used as modifier
+      }
+    } else if (keycode >= KC_A && keycode <= KC_Z) {
+      // For regular keycodes, store as-is
       last_keycode = keycode;
     } else {
       last_keycode = KC_NO;
