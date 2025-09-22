@@ -5,21 +5,21 @@ Hello!
 x g r f v   ¹ u o , Q
 l s n d p   k i e a h
 w z m c b   j y ' . -
-      ‡ ³   t 𐠒
+      ✦ ³   t 𐠒
 ```
 - `¹` denotes `backspace`
 - `³` denotes `space`
 - `ⵜ` denotes `one shot shift`
 - `Q` outputs `qu`
-- `‡` is the `magic` key
+- `✦` is the `magic` key
 
 # Magic key
 
 | Prev. | Repeat | Comment |
 | ---: | :---: | :--- |
-| `space`+`‡` | `th` |  |
-| `qu`+`‡` | `Q` | As `Q` outputs `qu`, the magic key simply deletes `u` |
-| `l`+`‡` | `ll` |  |
+| `space`+`✦` | `th` |  |
+| `qu`+`✦` | `Q` | As `Q` outputs `qu`, the magic key simply deletes `u` |
+| `l`+`✦` | `ll` |  |
 
 # Oryx with custom QMK
 
