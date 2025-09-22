@@ -278,51 +278,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->tap.count > 0) {
         if (record->event.pressed) {
           register_code16(KC_U);
-        } else {
-          unregister_code16(KC_U);
-        }
-      } else {
-        if (record->event.pressed) {
-          register_code16(US_UDIA);
-        } else {
-          unregister_code16(US_UDIA);
-        }  
-      }  
-      return false;
-    case DUAL_FUNC_3:
-      if (record->tap.count > 0) {
-        if (record->event.pressed) {
-          register_code16(KC_O);
-        } else {
-          unregister_code16(KC_O);
-        }
-      } else {
-        if (record->event.pressed) {
-          register_code16(US_ODIA);
-        } else {
-          unregister_code16(US_ODIA);
-        }  
-      }  
-      return false;
-    case DUAL_FUNC_4:
-      if (record->tap.count > 0) {
-        if (record->event.pressed) {
-          register_code16(KC_A);
-        } else {
-          unregister_code16(KC_A);
-        }
-      } else {
-        if (record->event.pressed) {
-          register_code16(US_ADIA);
-        } else {
-          unregister_code16(US_ADIA);
-        }  
-      }  
-      return false;
-    case DUAL_FUNC_2:
-      if (record->tap.count > 0) {
-        if (record->event.pressed) {
-          register_code16(KC_U);
           last_keycode = KC_U;  // Track for magic key
         } else {
           unregister_code16(KC_U);
