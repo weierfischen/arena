@@ -1,3 +1,25 @@
+# QMK Sand
+
+```
+x g r f v   ¹ u o , Q
+l s n d p   k i e a h
+w z m c b   j y ' . -
+      ‡ ³   t 𐠒
+```
+- `¹` denotes `backspace`
+- `³` denotes `space`
+- `ⵜ` denotes `one shot shift`
+- `Q` outputs `qu`
+- `‡` is the `magic` key
+
+# Magic key
+
+| Prev. | Repeat | Comment |
+| ---: | :---: | :--- |
+| `space`+`‡` | `th` |  |
+| `qu`+`‡` | `Q` | As `Q` outputs `qu`, the magic key simply deletes `u` |
+| `l`+`‡` | `ll` |  |
+
 # Oryx with custom QMK
 
 This repository allows combining the convenience of [Oryx’s](https://www.zsa.io/oryx) graphical layout editing with the power of [QMK](https://qmk.fm), allowing you to customize your Oryx layout with advanced QMK features like Achordion and Repeat Key, while automating firmware builds through GitHub Actions.
