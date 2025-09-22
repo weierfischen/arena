@@ -439,7 +439,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
   // Track last keycode for magic key functionality (for regular keys)
   if (record->event.pressed && keycode != MAGIC_KEY && keycode != MT(MOD_LALT, MAGIC_KEY) &&
-      keycode != DUAL_FUNC_5 && keycode != DUAL_FUNC_2 && keycode != DUAL_FUNC_3 && keycode != DUAL_FUNC_4) {
+      keycode != DUAL_FUNC_5 && keycode != DUAL_FUNC_2 && keycode != DUAL_FUNC_3 && keycode != DUAL_FUNC_4 &&
+      keycode != ST_MACRO_0) {
     // Handle mod-tap keys for I and E
     if (keycode == MT(MOD_RCTL, KC_I)) {
       if (record->tap.count > 0) {
