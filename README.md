@@ -1,5 +1,6 @@
-Hello!
-# QMK Sand
+# Arena
+
+Arena is Latin for Sand. 
 
 ```
 x g r f v   ¹ u o , Q
@@ -21,6 +22,7 @@ w z m c b   j y ' . -
 | `qu`+`✦` | `Q` | As `Q` outputs `qu`, the magic key simply deletes `u` |
 | `vowel`+`✦` | `+h` | Adds `h` after vowels (a,e,i,o,u,ä,ö,ü) |
 | `k`+`✦` | `ki` |  |
+| `r`+`✦` | `rm` |  |
 
 # Oryx with custom QMK
 
