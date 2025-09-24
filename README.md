@@ -19,10 +19,12 @@ w z m c b   j y ' . -
 | Prev. | Repeat | Comment |
 | ---: | :---: | :--- |
 | `t`+`✦` | `th` |  |
+| `ⵜ`+`✦` | `T` |  |
 | `qu`+`✦` | `Q` | As `Q` outputs `qu`, the magic key simply deletes `u` |
 | `vowel`+`✦` | `+h` | Adds `h` after vowels (a,e,i,o,u,ä,ö,ü) |
 | `k`+`✦` | `ki` |  |
 | `r`+`✦` | `rm` |  |
+| `w`+`✦` | `wh` |  |
 
 # Keymap drawer
 
