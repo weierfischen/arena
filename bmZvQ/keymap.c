@@ -121,6 +121,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
 bool capslock_active = false;
 
+// ===== Custom QMK Features Begin =====
+
 // Magic key functionality
 static uint16_t last_keycode = KC_NO;
 static bool magic_key_active = false;
@@ -130,6 +132,8 @@ bool is_vowel(uint16_t keycode) {
     return (keycode == KC_A || keycode == KC_E || keycode == KC_I ||
             keycode == KC_O || keycode == KC_U);
 }
+
+// ===== Custom QMK Features End =====
 
 bool led_update_user(led_t led_state) {
   capslock_active = led_state.caps_lock;
@@ -329,7 +333,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->tap.count > 0) {
         if (record->event.pressed) {
           register_code16(KC_T);
-          last_keycode = KC_T;  // Track for magic key
+          last_keycode = KC_NO;  // Don't track T for magic key anymore
         } else {
           unregister_code16(KC_T);
         }
@@ -389,11 +393,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
     case MT(MOD_LALT, MAGIC_KEY):
       if (record->tap.count > 0) {
-        // Tapped - magic key functionality
+        // ===== Custom Magic Key Begin =====
         if (record->event.pressed) {
           // Magic key pressed - check last key
-          if (last_keycode == KC_T) {
-            // Send 'T' (capital T) for 't'
+          if (last_keycode == OSM(MOD_LSFT)) {
+            // Send 'T' (capital T) for one shot shift
             register_code16(LSFT(KC_T));
           } else if (is_vowel(last_keycode)) {
             // Send 'h' for vowels
@@ -407,7 +411,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           }
           magic_key_active = true;
         } else {
-          if (last_keycode == KC_T && magic_key_active) {
+          if (last_keycode == OSM(MOD_LSFT) && magic_key_active) {
             unregister_code16(LSFT(KC_T));
           } else if (is_vowel(last_keycode) && magic_key_active) {
             unregister_code16(KC_H);
@@ -417,15 +421,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           // KC_QU uses tap_code16, no need to unregister
           magic_key_active = false;
         }
+        // ===== Custom Magic Key End =====
         return false;
       }
       // If not tapped (held), let QMK handle left alt
       return true;
     case MAGIC_KEY:
+      // ===== Custom Magic Key Begin =====
       if (record->event.pressed) {
         // Magic key pressed - check last key
-        if (last_keycode == KC_T) {
-          // Send 'T' (capital T) for 't'
+        if (last_keycode == OSM(MOD_LSFT)) {
+          // Send 'T' (capital T) for one shot shift
           register_code16(LSFT(KC_T));
         } else if (is_vowel(last_keycode)) {
           // Send 'h' for vowels
@@ -439,7 +445,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         magic_key_active = true;
       } else {
-        if (last_keycode == KC_T && magic_key_active) {
+        if (last_keycode == OSM(MOD_LSFT) && magic_key_active) {
           unregister_code16(LSFT(KC_T));
         } else if (is_vowel(last_keycode) && magic_key_active) {
           unregister_code16(KC_H);
@@ -449,6 +455,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // KC_QU uses tap_code16, no need to unregister
         magic_key_active = false;
       }
+      // ===== Custom Magic Key End =====
       return false;
     case RGB_SLD:
       if (record->event.pressed) {
@@ -457,6 +464,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
   }
 
+  // ===== Custom Magic Key Tracking Begin =====
   // Track last keycode for magic key functionality (for regular keys)
   if (record->event.pressed && keycode != MAGIC_KEY && keycode != MT(MOD_LALT, MAGIC_KEY) &&
       keycode != DUAL_FUNC_5 && keycode != DUAL_FUNC_2 && keycode != DUAL_FUNC_3 && keycode != DUAL_FUNC_4 &&
@@ -474,6 +482,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       } else {
         last_keycode = KC_NO;  // Don't track when used as modifier
       }
+    } else if (keycode == OSM(MOD_LSFT)) {
+      // Track one shot shift for magic key
+      last_keycode = OSM(MOD_LSFT);
     } else if (keycode >= KC_A && keycode <= KC_Z) {
       // For regular keycodes, store as-is
       last_keycode = keycode;
@@ -481,6 +492,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       last_keycode = KC_NO;
     }
   }
+  // ===== Custom Magic Key Tracking End =====
 
   return true;
 }
