@@ -24,6 +24,12 @@ w z m c b   j y ' . -
 | `k`+`✦` | `ki` |  |
 | `r`+`✦` | `rm` |  |
 
+# Keymap drawer
+
+<img src="img/arena_keymap.svg" alt="arena keymap" width="100%" />
+
+[Keymap Drawer permalink](https://caksoylar.github.io/keymap-drawer?keymap_yaml=H4sIAAAAAAACA52OSQrCUBBE956iCB_cVHSfnfMUxySOiHxJEEkkmKgQRfAEHtKT2IIbISs33TT1qqojncXnk4Xb8RBuwiDbxjrxLVxTXb7Emd4FCfGRoi9nVxZDz70X5A6S1CoAr8fzswATKwMG8ddY_0TMiRYxIZrElKg6I8IjhoJS5LGX47EJhxgQdULwHtEhGkSFaOfgM2JJ9Ima5BNdYiFUUZQSYf4alDr4eys96UQpaZF0V55xnPUbXmXFCT4BAAA%3D)
+
 # Oryx with custom QMK
 
 This repository allows combining the convenience of [Oryx’s](https://www.zsa.io/oryx) graphical layout editing with the power of [QMK](https://qmk.fm), allowing you to customize your Oryx layout with advanced QMK features like Achordion and Repeat Key, while automating firmware builds through GitHub Actions.
