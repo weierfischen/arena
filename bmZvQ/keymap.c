@@ -392,8 +392,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // Tapped - magic key functionality
         if (record->event.pressed) {
           // Magic key pressed - check last key
-          if (last_keycode == KC_T || is_vowel(last_keycode)) {
-            // Send 'h' for 't' or vowels
+          if (last_keycode == KC_T) {
+            // Send 'T' (capital T) for 't'
+            register_code16(LSFT(KC_T));
+          } else if (is_vowel(last_keycode)) {
+            // Send 'h' for vowels
             register_code16(KC_H);
           } else if (last_keycode == KC_L) {
             // Send 'l' for 'l' + magic = 'll'
@@ -404,7 +407,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           }
           magic_key_active = true;
         } else {
-          if ((last_keycode == KC_T || is_vowel(last_keycode)) && magic_key_active) {
+          if (last_keycode == KC_T && magic_key_active) {
+            unregister_code16(LSFT(KC_T));
+          } else if (is_vowel(last_keycode) && magic_key_active) {
             unregister_code16(KC_H);
           } else if (last_keycode == KC_L && magic_key_active) {
             unregister_code16(KC_L);
@@ -419,8 +424,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case MAGIC_KEY:
       if (record->event.pressed) {
         // Magic key pressed - check last key
-        if (last_keycode == KC_T || is_vowel(last_keycode)) {
-          // Send 'h' for 't' or vowels
+        if (last_keycode == KC_T) {
+          // Send 'T' (capital T) for 't'
+          register_code16(LSFT(KC_T));
+        } else if (is_vowel(last_keycode)) {
+          // Send 'h' for vowels
           register_code16(KC_H);
         } else if (last_keycode == KC_L) {
           // Send 'l' for 'l' + magic = 'll'
@@ -431,7 +439,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         magic_key_active = true;
       } else {
-        if ((last_keycode == KC_T || is_vowel(last_keycode)) && magic_key_active) {
+        if (last_keycode == KC_T && magic_key_active) {
+          unregister_code16(LSFT(KC_T));
+        } else if (is_vowel(last_keycode) && magic_key_active) {
           unregister_code16(KC_H);
         } else if (last_keycode == KC_L && magic_key_active) {
           unregister_code16(KC_L);
