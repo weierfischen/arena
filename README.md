@@ -3,9 +3,9 @@
 Arena is Latin for Sand. 
 
 ```
-x g r f v   ¹ u o , Q
-l s n d p   k i e a h
-w z m c b   j y ' . -
+x g r h v   ¹ u o , Q
+l s n d p   k i e a c
+w z m f b   j y ' . -
       ✦ ³   t 𐠒
 ```
 - `¹` denotes `backspace`
@@ -25,6 +25,16 @@ w z m c b   j y ' . -
 | `k`+`✦` | `ki` |  |
 | `r`+`✦` | `rm` |  |
 | `w`+`✦` | `wh` |  |
+
+
+# Switched `h` version
+
+| Prev. | Repeat | Comment |
+| ---: | :---: | :--- |
+| `ⵜ`+`✦` | `T` |  |
+| `qu`+`✦` | `Q` | As `Q` outputs `qu`, the magic key simply deletes `u` |
+| `k`+`✦` | `ki` |  |
+| `r`+`✦` | `rm` |  |
 
 # Keymap drawer
 
