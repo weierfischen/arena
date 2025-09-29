@@ -36,11 +36,11 @@ w z m f b   j y ' . -
 | `k`+`✦` | `ki` |  |
 | `r`+`✦` | `rm` |  |
 
-# Uncomfortable sequences
+## Uncomfortable sequences
 
-`pf`
-`T` (`𐠒`+`t`)
-`wh`
+- `pf`
+- `T` (`𐠒`+`t`)
+- `wh`
 
 # Keymap drawer
 
