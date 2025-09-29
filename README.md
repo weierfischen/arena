@@ -1,5 +1,7 @@
 # Arena
 
+<img src="img/layout_layers.svg" alt="arena keymap" width="100%" />
+
 Arena is Latin for Sand. 
 
 ```
@@ -44,7 +46,7 @@ w z m f b   j y ' . -
 
 # Keymap drawer
 
-<img src="img/arena_keymap.svg" alt="arena keymap" width="100%" />
+<img src="img/layout_layers.svg" alt="arena keymap" width="100%" />
 
 [Keymap Drawer permalink](https://caksoylar.github.io/keymap-drawer?keymap_yaml=H4sIAAAAAAACA52OSQrCUBBE956iCB_cVHSfnfMUxySOiHxJEEkkmKgQRfAEHtKT2IIbISs33TT1qqojncXnk4Xb8RBuwiDbxjrxLVxTXb7Emd4FCfGRoi9nVxZDz70X5A6S1CoAr8fzswATKwMG8ddY_0TMiRYxIZrElKg6I8IjhoJS5LGX47EJhxgQdULwHtEhGkSFaOfgM2JJ9Ima5BNdYiFUUZQSYf4alDr4eys96UQpaZF0V55xnPUbXmXFCT4BAAA%3D)
 
