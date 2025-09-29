@@ -1,6 +1,6 @@
 # Arena
 
-<img src="img/layout_layers.svg" alt="arena keymap" width="100%" />
+<img src="img/arena_keymap.svg" alt="arena keymap" width="100%" />
 
 Arena is Latin for Sand. 
 
