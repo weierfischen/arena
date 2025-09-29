@@ -36,6 +36,12 @@ w z m f b   j y ' . -
 | `k`+`✦` | `ki` |  |
 | `r`+`✦` | `rm` |  |
 
+# Uncomfortable sequences
+
+`pf`
+`T` (`𐠒`+`t`)
+`wh`
+
 # Keymap drawer
 
 <img src="img/arena_keymap.svg" alt="arena keymap" width="100%" />
