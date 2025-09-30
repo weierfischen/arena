@@ -43,6 +43,7 @@ w z m f b   j y ' . -
 - `pf`
 - `T` (`𐠒`+`t`)
 - `wh`
+- `J` (`𐠒`+`j`)
 
 # Keymap drawer
 
